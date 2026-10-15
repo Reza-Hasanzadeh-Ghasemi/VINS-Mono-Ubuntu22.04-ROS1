@@ -1,3 +1,145 @@
+# VINS-Mono on Ubuntu 22.04 LTS — ROS1 Compatibility Port
+
+This repository is an unofficial compatibility port of the original
+[HKUST VINS-Mono](https://github.com/HKUST-Aerial-Robotics/VINS-Mono)
+for Ubuntu 22.04 LTS.
+
+The original VINS-Mono algorithm has not been redesigned.  
+The modifications in this fork are focused on build and dependency compatibility with Ubuntu 22.04 LTS while preserving the original VINS-Mono implementation.
+
+## Tested Environment
+
+| Component | Tested Configuration |
+|---|---|
+| Operating System | Ubuntu 22.04.5 LTS |
+| Architecture | x86_64 |
+| ROS | ROS1 packages available in Ubuntu 22.04 repositories |
+| Ceres Solver | 1.14.0 |
+| OpenCV | 4.5.4 |
+| Eigen | 3.4.0 |
+| C++ Standard | C++17 |
+| Build | Successful |
+| EuRoC MAV Dataset | Successfully tested |
+| Hardware Camera + IMU | Not yet tested |
+| Jetson / ARM64 | Not yet tested |
+
+## Main Compatibility Change
+
+The original VINS-Mono source uses C++11.
+
+For compatibility with the tested Ubuntu 22.04 environment, the affected
+`CMakeLists.txt` files were updated from:
+
+```text
+-std=c++11
+```
+
+to:
+
+```text
+-std=c++17
+```
+
+The following VINS-Mono modules were updated:
+
+- `ar_demo`
+- `benchmark_publisher`
+- `camera_model`
+- `data_generator`
+- `feature_tracker`
+- `pose_graph`
+- `vins_estimator`
+
+## Installation
+
+A complete installation guide is available here:
+
+[Ubuntu 22.04 Installation Guide](INSTALL_UBUNTU_22_04.md)
+
+Installation helper scripts are available in:
+
+```text
+scripts/
+├── install_dependencies.sh
+├── install_ceres_1_14.sh
+└── build_vins.sh
+```
+
+## Quick Installation Overview
+
+Install the required dependencies:
+
+```bash
+bash scripts/install_dependencies.sh
+```
+
+Install Ceres Solver 1.14.0:
+
+```bash
+bash scripts/install_ceres_1_14.sh
+```
+
+Build VINS-Mono:
+
+```bash
+bash scripts/build_vins.sh
+```
+
+For detailed instructions, please see:
+
+[INSTALL_UBUNTU_22_04.md](INSTALL_UBUNTU_22_04.md)
+
+## Validation
+
+The modified source was successfully compiled on Ubuntu 22.04.5 LTS.
+
+The final build completed with:
+
+```text
+[100%] Built target vins_estimator
+```
+
+The system was also successfully executed using the EuRoC MAV dataset.
+
+A clean-install reproduction test on a second independent machine has not yet been performed.
+
+## Scope of This Fork
+
+This repository currently focuses on:
+
+- Ubuntu 22.04 LTS compatibility
+- ROS1 execution
+- Ceres Solver 1.14 compatibility
+- C++17 build compatibility
+- EuRoC dataset validation
+
+The following configurations have not yet been validated:
+
+- Physical camera and IMU hardware
+- NVIDIA Jetson platforms
+- ARM64 architecture
+- ROS2
+
+## Original Project
+
+This repository is based on the original VINS-Mono project developed by
+HKUST Aerial Robotics Group:
+
+https://github.com/HKUST-Aerial-Robotics/VINS-Mono
+
+Please refer to the original project for the VINS-Mono algorithm, publications,
+citations, datasets, and original documentation.
+
+## License
+
+This fork preserves the license of the original VINS-Mono repository.
+
+---
+
+# Original VINS-Mono README
+
+
+
 # VINS-Mono
 ## A Robust and Versatile Monocular Visual-Inertial State Estimator
 
